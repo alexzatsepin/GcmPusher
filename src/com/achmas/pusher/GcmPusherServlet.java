@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.concurrent.ThreadFactory;
 
 import javax.servlet.ServletException;
@@ -17,6 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.ThreadManager;
+import com.google.appengine.labs.repackaged.org.json.JSONArray;
+import com.google.appengine.labs.repackaged.org.json.JSONException;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
+import com.google.appengine.repackaged.com.google.api.client.json.Json;
 
 @SuppressWarnings("serial")
 public class GcmPusherServlet extends HttpServlet {
@@ -76,6 +81,7 @@ public class GcmPusherServlet extends HttpServlet {
 				con = (HttpURLConnection) url.openConnection();
 				con.setDoOutput(true);
 				con.setRequestMethod("POST");
+				con.setRequestProperty("Content-Type", "application/json");
 				con.setRequestProperty("Authorization", "key=" + mAPIKey);
 
 				// send post request
@@ -92,8 +98,11 @@ public class GcmPusherServlet extends HttpServlet {
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						con.getInputStream()));
 				String inputLine;
-				StringBuilder response = new StringBuilder(/*"Gcm response code:"
-						+ responseCode + '\n'*/);
+				StringBuilder response = new StringBuilder(/*
+															 * "Gcm response code:"
+															 * + responseCode +
+															 * '\n'
+															 */);
 
 				while ((inputLine = in.readLine()) != null) {
 					response.append(inputLine);
@@ -122,21 +131,28 @@ public class GcmPusherServlet extends HttpServlet {
 		}
 
 		private String buildParams() {
-			StringBuilder params = new StringBuilder("registration_id="
-					+ mRegistrationId);
-			if (!isStringEmpty(mCollapseKey)) {
-				params.append("&collapse_key=").append(mCollapseKey);
+			JSONObject json = new JSONObject();
+			try {
+				if (!isStringEmpty(mCollapseKey)) {
+					json.put("collapse_key", mCollapseKey);
+				}
+				if (!isStringEmpty(mMessage)){
+					JSONObject data = new JSONObject();
+					data.put("message", mMessage);
+					json.put("data", data);
+				}
+				json.put("registration_ids", Arrays.asList(mRegistrationId.split(",")));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			if (!isStringEmpty(mMessage)) {
-				params.append("&data.message=").append(mMessage);
-			}
-			return params.toString();
+			return json.toString();
 		}
 
 		private static boolean isStringEmpty(String str) {
 			return str == null || str.length() == 0;
 		}
-		
+
 		private class PrintResponse {
 			private final int mHttpStatus;
 			private final String mBody;
@@ -148,6 +164,5 @@ public class GcmPusherServlet extends HttpServlet {
 		}
 
 	}
-	
 
 }

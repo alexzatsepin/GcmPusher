@@ -10,7 +10,7 @@
 			<table>
 				<tr>
 					<td><label for="apiKey">API Key:</label></td>
-					<td><input type="text" name="apiKey" id="apiKey" /></td>
+					<td><input type="text" name="apiKey" id="apiKey" value="AIzaSyCiIdSUrS23cYs4z6u3sXxcLTXy6L32ptE" /></td>
 				</tr>
 				<tr>
 					<td><label for="regId">Registration id:</label></td>
