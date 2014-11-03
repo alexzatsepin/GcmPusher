@@ -13,7 +13,10 @@
 					<td><input type="text" name="apiKey" id="apiKey" value="AIzaSyCiIdSUrS23cYs4z6u3sXxcLTXy6L32ptE" /></td>
 				</tr>
 				<tr>
-					<td><label for="regId">Registration id:</label></td>
+					<td colspan="2">For sending the message to several devices use comma separator</td>
+				</tr>
+				<tr>
+					<td><label for="regId">Registration ids:</label></td>
 					<td><input type="text" name="regId" id="regId" /></td>
 				</tr>
 				<tr>
