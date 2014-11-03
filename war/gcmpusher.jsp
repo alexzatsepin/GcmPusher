@@ -28,8 +28,12 @@
 					<td><label for="pushCount">Push count:</label></td>
 					<td><input type="number" name="pushCount" id="pushCount" value="1" /></td>
 				</tr>
+				<tr>
+					<td><input type="submit" value="Send push message"/></td>
+				</tr>
 			</table>
-			<input type="submit" value="Send push message"/>
+			</p>You can donwload android GCM client app 
+			<a href="/clientapk/gcm_client.apk"> here</a>
 		</fieldset>
 	</form>
 
