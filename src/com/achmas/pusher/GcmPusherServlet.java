@@ -136,6 +136,7 @@ public class GcmPusherServlet extends HttpServlet {
 				if (!isStringEmpty(mCollapseKey)) {
 					json.put("collapse_key", mCollapseKey);
 				}
+				json.put("delay_while_idle", false);
 				if (!isStringEmpty(mMessage)){
 					JSONObject data = new JSONObject();
 					data.put("message", mMessage);
