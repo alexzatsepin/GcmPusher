@@ -31,6 +31,10 @@
 					<td><label for="pushCount">Push count:</label></td>
 					<td><input type="number" name="pushCount" id="pushCount" value="1" /></td>
 				</tr>
+			    <tr>
+					<td><label for="restrictedPackageName">Restricted package name:</label></td>
+					<td><input type="text" name="restrictedPackageName" id="restrictedPackageName" /></td>
+				</tr>
 				<tr>
 					<td><input type="submit" value="Send push message"/></td>
 				</tr>

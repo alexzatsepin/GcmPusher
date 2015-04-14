@@ -44,6 +44,7 @@ public class GcmPusherServlet extends HttpServlet {
 		private final String mCollapseKey;
 		private final String mMessage;
 		private final String mAPIKey;
+		private final String mRestrictedPackageName;
 		private int mCounter;
 		private final HttpServletResponse mResponse;
 
@@ -55,6 +56,7 @@ public class GcmPusherServlet extends HttpServlet {
 			mCollapseKey = request.getParameter("collapseKey");
 			mMessage = request.getParameter("message");
 			mCounter = Integer.valueOf(request.getParameter("pushCount"));
+			mRestrictedPackageName = request.getParameter("restrictedPackageName");
 		}
 
 		@Override
@@ -140,7 +142,11 @@ public class GcmPusherServlet extends HttpServlet {
 				if (!isStringEmpty(mMessage)){
 					JSONObject data = new JSONObject();
 					data.put("message", mMessage);
+					data.put("dev_11141242324155124321_message", mMessage);
 					json.put("data", data);
+				}
+				if (!isStringEmpty(mRestrictedPackageName)){
+					json.put("restricted_package_name", mRestrictedPackageName);
 				}
 				json.put("registration_ids", Arrays.asList(mRegistrationId.split(",")));
 			} catch (JSONException e) {
